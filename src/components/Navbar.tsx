@@ -29,33 +29,18 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-emerald-600 ${
-                  location.pathname === item.path ? 'text-emerald-600' : 'text-zinc-600'
-                }`}
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.name}</span>
-              </Link>
-            ))}
+          {/* Navigation Actions */}
+          <div className="flex items-center space-x-4">
             <Link
               to="/profile"
-              className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg"
+              className="bg-emerald-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg active:scale-95"
             >
               Start Now
             </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-zinc-600 hover:text-emerald-600 p-2"
+              className="text-zinc-600 hover:text-emerald-600 p-2 transition-colors rounded-lg hover:bg-zinc-100"
+              aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -63,38 +48,41 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-zinc-200 overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-lg border-b border-zinc-200 shadow-xl z-40"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center space-x-3 px-3 py-3 rounded-xl text-base font-medium ${
-                    location.pathname === item.path
-                      ? 'bg-emerald-50 text-emerald-600'
-                      : 'text-zinc-600 hover:bg-zinc-50'
-                  }`}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.name}</span>
-                </Link>
-              ))}
-              <Link
-                to="/profile"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center bg-emerald-600 text-white px-4 py-3 rounded-xl text-base font-medium hover:bg-emerald-700"
-              >
-                Get Started
-              </Link>
+            <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center space-x-4 p-4 rounded-2xl transition-all ${
+                      location.pathname === item.path
+                        ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100'
+                        : 'text-zinc-600 hover:bg-zinc-50 hover:text-emerald-600'
+                    }`}
+                  >
+                    <div className={`p-3 rounded-xl ${
+                      location.pathname === item.path ? 'bg-emerald-100' : 'bg-zinc-100'
+                    }`}>
+                      <item.icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <span className="text-lg font-semibold block">{item.name}</span>
+                      <span className="text-sm text-zinc-500">Go to {item.name.toLowerCase()}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
