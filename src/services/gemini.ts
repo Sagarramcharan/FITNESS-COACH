@@ -2,6 +2,9 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { UserProfile, FitnessPlan } from "../types";
 
 const apiKey = process.env.GEMINI_API_KEY || '';
+if (!apiKey) {
+  console.warn('Backend service key is not configured. Some features may be unavailable.');
+}
 const ai = new GoogleGenAI({ apiKey });
 
 const fitnessPlanSchema = {

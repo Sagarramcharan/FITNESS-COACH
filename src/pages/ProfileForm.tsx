@@ -38,8 +38,10 @@ const ProfileForm = () => {
       localStorage.setItem('fitnessPlan', JSON.stringify(plan));
       navigate('/plan');
     } catch (error) {
-      console.error('Error generating plan:', error);
-      alert('Failed to generate plan. Please try again.');
+      console.error('Plan generation failed:', error);
+      // We keep the specific error in the console for the developer, 
+      // but show a generic, professional message to the user.
+      alert('Service temporarily unavailable. Please check your connection or try again later.');
     } finally {
       setLoading(false);
     }
