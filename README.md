@@ -1,6 +1,5 @@
 
-
-# Run and deploy your AI Studio app
+# START YOUR JOURNEY WITH THE BEST
 
 This contains everything you need to run your app locally.
 
